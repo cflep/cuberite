@@ -161,4 +161,20 @@ private:
 			(a_Plant == E_BLOCK_PUMPKIN_STEM)
 		);
 	}
-} ;
+
+
+
+	virtual void OnPlayerFall(const cChunk & Chunk, const Vector3i Position,cChunkInterface & a_ChunkInterface, Vector3i a_BlockPos)
+	{
+
+		Chunk.ForEachEntityInBox(cBoundingBox(Vector3d(0.5, 0, 0.5) + Position, 0.5, 0.5), [&](cEntity & Entity)
+		{
+			if (Entity.isPlayer() || Entity.isMob())
+			{
+				if (Entity.GetSpeedZ() > 1){
+		  		a_ChunkInterface.SetBlock(a_BlockPos, E_BLOCK_DIRT, 0);
+		  	}
+			}
+		});
+	};
+};
